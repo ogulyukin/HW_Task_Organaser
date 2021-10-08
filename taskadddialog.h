@@ -2,8 +2,8 @@
 #define TASKADDDIALOG_H
 
 #include <QDialog>
-#include <priority.h>
-
+#include "priority.h"
+#include "task.h"
 namespace Ui {
 class taskAddDialog;
 }
@@ -14,6 +14,7 @@ class taskAddDialog : public QDialog
 
 public:
     explicit taskAddDialog(QList<Priority>& priorities, QWidget *parent = nullptr);
+    taskAddDialog(Task &task, QList<Priority>& priorities, QWidget *parent = nullptr);
     ~taskAddDialog();
     QString getTaskName();
     QString getTimeOut();

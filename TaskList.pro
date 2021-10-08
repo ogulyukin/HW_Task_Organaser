@@ -13,7 +13,9 @@ SOURCES += \
     io.cpp \
     main.cpp \
     priority.cpp \
+    prioritychangedialog.cpp \
     setcolorsdialog.cpp \
+    statuschangedialog.cpp \
     task.cpp \
     taskadddialog.cpp \
     tasllist.cpp
@@ -22,14 +24,18 @@ HEADERS += \
     addedittaskdialog.h \
     io.h \
     priority.h \
+    prioritychangedialog.h \
     setcolorsdialog.h \
+    statuschangedialog.h \
     task.h \
     taskadddialog.h \
     tasllist.h
 
 FORMS += \
     addedittaskdialog.ui \
+    prioritychangedialog.ui \
     setcolorsdialog.ui \
+    statuschangedialog.ui \
     taskadddialog.ui \
     tasllist.ui
 

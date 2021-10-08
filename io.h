@@ -13,7 +13,7 @@
 class IO
 {
 public:
-    static bool loadData(QMultiMap<int, Task*>& tasks, QList<Priority>& priorities);
+    static int loadData(QMultiMap<int, Task*>& tasks, QList<Priority>& priorities);
     static bool saveData(QMultiMap<int, Task*>& tasks, QList<Priority>& priorities);
 };
 

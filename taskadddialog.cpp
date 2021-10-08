@@ -13,6 +13,20 @@ taskAddDialog::taskAddDialog(QList<Priority>& priorities, QWidget *parent) :
     ui->dateEdit->setDate(QDate::currentDate());
 }
 
+taskAddDialog::taskAddDialog(Task &task, QList<Priority> &priorities, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::taskAddDialog), priorities(priorities)
+{
+    ui->setupUi(this);
+    for(auto it = priorities.begin(); it != priorities.end(); it++)
+    {
+        ui->comboBox->addItem(it->name);
+    }
+    ui->dateEdit->setDate(QDate::currentDate());
+    ui->lineEdit->text() = task.nameTask;
+    //ui->dateEdit->date() = QDate(); //todo conversion to QDate from QString
+}
+
 taskAddDialog::~taskAddDialog()
 {
     delete ui;

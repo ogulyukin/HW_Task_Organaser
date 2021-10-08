@@ -1,15 +1,16 @@
 #include "io.h"
 
-bool IO::loadData(QMultiMap<int, Task*> &tasks, QList<Priority> &priorities)
+int IO::loadData(QMultiMap<int, Task*> &tasks, QList<Priority> &priorities)
 {
     QFile file("tasks.dat");
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             qDebug() << "Невозможно открыть файл с тасками!";
-            return false;
+            return 0;
         }
         QTextStream istr(&file);
         QString line = istr.readLine();
+        int lastId = 0;
         while(!line.isNull())
         {
             qDebug() << line;
@@ -17,8 +18,10 @@ bool IO::loadData(QMultiMap<int, Task*> &tasks, QList<Priority> &priorities)
             {
                 QList<QString> list;
                 list = (line.split(";"));
-                Task* task = new Task(list.at(1),list.at(2),list.at(3),list.at(4));
-                tasks.insert(list.at(0).toInt(), task);
+                int foundId = list.at(0).toInt();
+                Task* task = new Task(foundId,list.at(2),list.at(3),list.at(4), list.at(5));
+                tasks.insert(list.at(1).toInt(), task);
+                foundId > lastId ? lastId = foundId : 0;
             }
             line = istr.readLine();
         }
@@ -27,7 +30,7 @@ bool IO::loadData(QMultiMap<int, Task*> &tasks, QList<Priority> &priorities)
         if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             qDebug() << "Невозможно открыть файл с приоритетами!";
-            return false;
+            return lastId;
         }
         QTextStream istr2(&file);
         line = istr2.readLine();
@@ -44,7 +47,7 @@ bool IO::loadData(QMultiMap<int, Task*> &tasks, QList<Priority> &priorities)
             line = istr2.readLine();
         }
         file.close();
-    return true;
+    return lastId;
 }
 
 bool IO::saveData(QMultiMap<int, Task*> &tasks, QList<Priority> &priorities)
@@ -57,7 +60,7 @@ bool IO::saveData(QMultiMap<int, Task*> &tasks, QList<Priority> &priorities)
     }
     QTextStream ostr(&file);
     for(auto it = tasks.begin(); it != tasks.end(); it++){
-        ostr << it.key() << ";" << it.value()->nameTask << ";" << it.value()->dateIn << ";" << it.value()->timeIn
+        ostr << QString::number(it.value()->id) << ";" << it.key() << ";" << it.value()->nameTask << ";" << it.value()->dateIn << ";" << it.value()->timeIn
              << ";" << it.value()->dateOut << ";" << QString::number(it.value()->status) << Qt::endl;
     }
     ostr.flush();

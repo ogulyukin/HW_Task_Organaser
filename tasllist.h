@@ -9,6 +9,8 @@
 #include "priority.h"
 #include "setcolorsdialog.h"
 #include "taskadddialog.h"
+#include "statuschangedialog.h"
+#include "prioritychangedialog.h"
 #include <QDate>
 
 QT_BEGIN_NAMESPACE
@@ -51,6 +53,7 @@ private:
     QMultiMap<int, Task*> tasks;
     QList<Priority> priorities;
     void setTableWidget();
-    QString statuses[3]{"Не определен", "Выполнено", "В работе"};
+    QList<QString> statuses;
+    int lastId;
 };
 #endif // TASLLIST_H
